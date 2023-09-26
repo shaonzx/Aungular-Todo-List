@@ -1,62 +1,23 @@
 
 <div class="container">
-
   <div class="todo-list">
 
+    {{title}}
+
     <div class="input-group">
-      <input type="text" placeholder="Todo">
-      <button class="add-button">+</button>
+      <input type="text" placeholder="Todo" #newTask>
+      <button class="add-button" (click)="add(newTask.value)">+</button>
     </div>
 
     <table>
-      <tr class="even">
-        <td>
-          <pre>Visit Ann</pre>
-        </td>
-        <td>
-          <button class="add-button">x</button>
-          <button class="add-button">Done</button>
-        </td>
-      </tr>
 
-      <tr class="odd">
+      <tr *ngFor="let task of tasks" class="even">
         <td>
-          <pre>Call dad</pre>
+          <pre>{{task.title}}</pre>
         </td>
         <td>
-          <button class="add-button">x</button>
-          <button class="add-button">Done</button>
-        </td>
-      </tr>
-
-      <tr class="even">
-        <td>
-          <pre>Go to Gym</pre>
-        </td>
-        <td>
-          <button class="add-button">x</button>
-          <button class="add-button">Done</button>
-        </td>
-      </tr>
-
-      <tr class="odd">
-        <td>
-          <pre>Wash the dishes</pre>
-        </td>
-        <td>
-          <button class="add-button">x</button>
-          <button class="add-button">Done</button>
-        </td>
-      </tr>
-
-      
-      <tr class="even">
-        <td>
-          <pre>Shop for the party</pre>
-        </td>
-        <td>
-          <button class="add-button">x</button>
-          <button class="add-button">Done</button>
+          <button class="remove-button" (click)="remove(task)">x</button>
+          <button class="done-button" (click)="markAsDone(task)">Done</button>
         </td>
       </tr>
 
