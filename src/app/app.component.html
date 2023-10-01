@@ -1,27 +1,9 @@
-
-<div class="container">
-  <div class="todo-list">
-
+<!DOCTYPE html>
+<html lang="en">
+<header>
     {{title}}
-
-    <div class="input-group">
-      <input type="text" placeholder="Todo" #newTask>
-      <button class="add-button" (click)="add(newTask.value)">+</button>
-    </div>
-
-    <table>
-
-      <tr *ngFor="let task of tasks" class="even">
-        <td>
-          <pre>{{task.title}}</pre>
-        </td>
-        <td>
-          <button class="remove-button" (click)="remove(task)">x</button>
-          <button class="done-button" (click)="markAsDone(task)">Done</button>
-        </td>
-      </tr>
-
-    </table>
-
-  </div>
-</div>
+</header>
+<body>
+    <router-outlet></router-outlet>
+</body>
+</html>
