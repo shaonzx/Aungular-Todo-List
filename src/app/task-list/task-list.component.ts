@@ -1,4 +1,6 @@
+import { NgFor } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Route } from '@angular/router';
 
 @Component({
@@ -8,24 +10,38 @@ import { ActivatedRoute, Route } from '@angular/router';
 })
 export class TaskListComponent implements OnInit {
 
+
+  date: Date = new Date();
+  newTaskTitle : string = "";
+  tasks : Task[] = [
+    new Task("Visit Ann"),
+    new Task("Call Dad"),
+    new Task("Go to the Gym"),
+    new Task("Wash the dishes"),
+    new Task("Shop for the party")
+  ];
+
   constructor(private route: ActivatedRoute) {
     
-  }
+  } 
   
   ngOnInit(): void {
-    throw new Error('Method not implemented.');
+    this.date = new Date(this.route.snapshot.params['date']);
+    
   }
-  
-  tasks : Task[] = [
-  new Task("Visit Ann"),
-  new Task("Call Dad"),
-  new Task("Go to the Gym"),
-  new Task("Wash the dishes"),
-  new Task("Shop for the party")
-];
 
-add(newTask : string){
-  this.tasks.push(new Task(newTask));
+add(taskNgForm : NgForm){
+
+  if(taskNgForm.touched == false) return;
+  //if(taskNgForm.valid == false) return;
+
+  if(this.newTaskTitle === null || this.newTaskTitle === undefined || this.newTaskTitle === ""){
+    alert('You must add some string');
+  }else{
+    this.tasks.push(new Task(this.newTaskTitle));
+    taskNgForm.reset({date : this.date});
+    //this.newTaskTitle = "";
+  }  
 }
 
 remove(taskToBeRemoved : Task){

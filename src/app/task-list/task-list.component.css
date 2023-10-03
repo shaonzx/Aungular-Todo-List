@@ -51,11 +51,18 @@
     font-weight: bold;
     /* color: white; */
   }
+
   button{
     border-style: none;
     cursor: pointer;
     height: 100%;
   }
+
+  button:disabled{
+    background-color: #1783e2;
+    cursor: default;
+  }
+
   .done-button {
     background-color: #242424;
     color: #ffffff;
@@ -98,4 +105,9 @@
 
   .is-done {
     text-decoration: line-through;
+  }
+
+  .validation-error{
+    color: rgb(218, 44, 44);
+    margin-bottom: 10px;
   }
