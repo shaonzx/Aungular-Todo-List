@@ -2,6 +2,8 @@ import { NgFor } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Route } from '@angular/router';
+import { TaskItem } from './task-item-dto';
+import { NewTask } from './new-task-dto';
 
 @Component({
   selector: 'app-task-list',
@@ -10,15 +12,14 @@ import { ActivatedRoute, Route } from '@angular/router';
 })
 export class TaskListComponent implements OnInit {
 
+  newTask:NewTask = new NewTask();
 
-  date: Date = new Date();
-  newTaskTitle : string = "";
-  tasks : Task[] = [
-    new Task("Visit Ann"),
-    new Task("Call Dad"),
-    new Task("Go to the Gym"),
-    new Task("Wash the dishes"),
-    new Task("Shop for the party")
+  tasks : TaskItem[] = [
+    new TaskItem("Visit Ann"),
+    new TaskItem("Call Dad"),
+    new TaskItem("Go to the Gym"),
+    new TaskItem("Wash the dishes"),
+    new TaskItem("Shop for the party")
   ];
 
   constructor(private route: ActivatedRoute) {
@@ -26,7 +27,8 @@ export class TaskListComponent implements OnInit {
   } 
   
   ngOnInit(): void {
-    this.date = new Date(this.route.snapshot.params['date']);
+    var strDate = new Date(this.route.snapshot.params['date']);
+    this.newTask = new NewTask(this.newTask.title, new Date(strDate));
     
   }
 
@@ -35,30 +37,24 @@ add(taskNgForm : NgForm){
   if(taskNgForm.touched == false) return;
   //if(taskNgForm.valid == false) return;
 
-  if(this.newTaskTitle === null || this.newTaskTitle === undefined || this.newTaskTitle === ""){
+  if(this.newTask.title === null || this.newTask.title === undefined || this.newTask.title === ""){
     alert('You must add some string');
   }else{
-    this.tasks.push(new Task(this.newTaskTitle));
-    taskNgForm.reset({date : this.date});
+    this.tasks.push(new TaskItem(this.newTask.title));
+    taskNgForm.reset({date : this.newTask.date});
     //this.newTaskTitle = "";
   }  
 }
 
-remove(taskToBeRemoved : Task){
+remove(taskToBeRemoved : TaskItem){
   if(confirm(`Are you sure you want to remove the following task?\n "${taskToBeRemoved.title}"`)) {
     this.tasks = this.tasks.filter(x => x != taskToBeRemoved);
   }    
 }
 
-markAsDone(taskToBeMarkedAsDone : Task){
+markAsDone(taskToBeMarkedAsDone : TaskItem){
   taskToBeMarkedAsDone.isDone = !taskToBeMarkedAsDone.isDone;
 }
 }
 
-class Task {
 
-constructor(public title:string) {    
-}
-
-public isDone = false;
-}
